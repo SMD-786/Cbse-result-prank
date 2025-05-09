@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBSE Class XII Result 2024</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+        }
+
+        .header {
+            background: #004684;
+padding:10px;
+            
+            align-items: center;
+            border-bottom: 4px solid #ffc107;
+        }
+
+        .header img {
+            height: 70px;
+
+            width:99%;
+        }
+
+        .header-text {
+            color: white;
+            padding:20px;
+        }
+
+        .header-text h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .main-container {
+            max-width: 800px;
+            margin: 30px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .form-container {
+            border: 2px solid #004684;
+            padding: 25px;
+            border-radius: 5px;
+            margin-bottom: 25px;
+        }
+
+        .form-title {
+            color: #004684;
+            margin-bottom: 20px;
+            font-size: 22px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .captcha {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+
+        .submit-btn {
+            background: #004684;
+            color: white;
+            padding: 12px 35px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #002f58;
+        }
+
+        .result-container {
+            display: none;
+            margin-top: 30px;
+        }
+
+        .student-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 25px;
+        }
+
+        .marks-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .marks-table th {
+            background: #004684;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .marks-table td {
+            padding: 12px;
+            border: 1px solid #dee2e6;
+        }
+
+        .print-btn {
+            background: #28a745;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+        }
+
+        .footer {
+            background: #004684;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        .note {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+      <a href="https://imgbb.com/"><img src="https://i.ibb.co/tp8KkZ4G/cbse-Result.jpg" alt="cbse-Result" border="0"></a>
+        <div class="header-text">
+            <h1>Central Board of Secondary Education</h1>
+            <h4>Government of India</h4>
+            <p>Examination results 2024-25</p>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <h2 style="color: #004684; margin-bottom: 25px; text-align: center;">
+            Senior School Certificate Examination (Class XII) Result 2024
+        </h2>
+
+        <div class="form-container">
+            <div class="form-title">Enter Your Details</div>
+            <form id="resultForm" onsubmit="handleSubmit(event)">
+                <div class="input-group">
+                    <label>Student Name</label>
+                    <input type="text" id="studentName" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Roll Number</label>
+                    <input type="text" id="rollno" required>
+                </div>
+
+                <div class="input-group">
+                    <label>School Number</label>
+                    <input type="text" id="schoolno" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Center Number</label>
+                    <input type="text" id="centerno" required>
+                </div>
+
+                <div class="captcha">
+                    <label>Security Pin: <span id="captchaQuestion"></span></label>
+                    <input type="text" id="captchaInput" required>
+                </div>
+
+                <button type="submit" class="submit-btn">View Result</button>
+            </form>
+        </div>
+
+        <div class="loading" id="loading">
+            <img src="https://www.cbse.gov.in/images/loading.gif" alt="Loading..." style="height: 50px;">
+            <p>Processing your request...</p>
+        </div>
+
+        <div class="result-container" id="resultContainer">
+            <div class="student-info">
+                <h3>Candidate Details</h3>
+                <p>Name: <strong id="resultName"></strong></p>
+                <p>Roll No: <strong id="resultRoll"></strong></p>
+                <p>School No: <strong id="resultSchool"></strong></p>
+                <p>Center No: <strong id="resultCenter"></strong></p>
+                <p>Percentage: <strong style="color: #004684;" id="resultPercentage">92.4%</strong></p>
+            </div>
+
+            <table class="marks-table">
+                <tr>
+                    <th>Subject Code</th>
+                    <th>Subject Name</th>
+                    <th>Marks Obtained</th>
+                    <th>Grade</th>
+                </tr>
+                <tr>
+                    <td>001</td>
+                    <td>ENGLISH CORE</td>
+                    <td>095</td>
+                    <td>A1</td>
+                </tr>
+                <tr>
+                    <td>041</td>
+                    <td>MATHEMATICS</td>
+                    <td>096</td>
+                    <td>A1</td>
+                </tr>
+                <tr>
+                    <td>042</td>
+                    <td>PHYSICS</td>
+                    <td>095</td>
+                    <td>A1</td>
+                </tr>
+                <tr>
+                    <td>043</td>
+                    <td>CHEMISTRY</td>
+                    <td>094</td>
+                    <td>A1</td>
+                </tr>
+                <tr>
+                    <td>083</td>
+                    <td>COMPUTER SCIENCE</td>
+                    <td>100</td>
+                    <td>A1</td>
+                </tr>
+            </table>
+
+            <button class="print-btn" onclick="window.print()">Print Scorecard</button>
+            <div class="note">
+                * This is a computer generated statement and does not require any signature
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>© 2024 Central Board of Secondary Education. All Rights Reserved.</p>
+        <p>Helpline: 011-22509256-59 | Email: cbsehelpdesk@cbsedelhi.org</p>
+        <p style="margin-top: 10px;">
+            <a href="#" style="color: #ffc107;">Privacy Policy</a> | 
+            <a href="#" style="color: #ffc107;">Terms & Conditions</a>
+        </p>
+    </div>
+
+    <script>
+        let captchaAnswer;
+        
+        function generateCaptcha() {
+            const num1 = Math.floor(Math.random() * 10);
+            const num2 = Math.floor(Math.random() * 10);
+            captchaAnswer = num1 + num2;
+            document.getElementById('captchaQuestion').textContent = `${num1} + ${num2} = ?`;
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            document.getElementById('loading').style.display = 'block';
+
+            const studentName = document.getElementById('studentName').value;
+            const rollNo = document.getElementById('rollno').value;
+            const schoolNo = document.getElementById('schoolno').value;
+            const centerNo = document.getElementById('centerno').value;
+
+            setTimeout(() => {
+                const userAnswer = parseInt(document.getElementById('captchaInput').value);
+                
+                if(userAnswer !== captchaAnswer) {
+                    alert('Invalid Security Pin! Please try again.');
+                    generateCaptcha();
+                    document.getElementById('loading').style.display = 'none';
+                    return;
+                }
+
+                // Update result fields
+                document.getElementById('resultName').textContent = studentName.toUpperCase();
+                document.getElementById('resultRoll').textContent = rollNo;
+                document.getElementById('resultSchool').textContent = schoolNo;
+                document.getElementById('resultCenter').textContent = centerNo;
+
+                document.getElementById('resultForm').reset();
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('resultContainer').style.display = 'block';
+                window.scrollTo({
+                    top: document.body.scrollHeight,
+                    behavior: 'smooth'
+                });
+            }, 1500);
+        }
+
+        // Initialize captcha on page load
+        generateCaptcha();
+    </script>
+</body>
+</html>
